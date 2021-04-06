@@ -1,0 +1,16 @@
+{
+
+    "references": {
+
+        "human": {
+                "gsnap": "gsnap/Homo_sapiens.GRCh38.dna.primary_assembly_ERCC92",
+                "gtf":"gtf/Homo_sapiens.GRCh38.81_and_ERCC92.gtf"
+        },
+
+        "mouse": {
+                "gsnap": "gsnap/mouse_GRCm38.81_ERCC92",
+                "gtf": "gtf/Mus_musculus.GRCm38.81_ERCC92_edited.gtf"
+        }
+    }
+
+}
