@@ -52,3 +52,6 @@ ${CONTAINER} -c "${CONFIG}" -s "${SPECIES}" -w "${OUTDIR}/HTSeq" CONCAT
 
 
 echo "Finished at `date`"
+
+
+
