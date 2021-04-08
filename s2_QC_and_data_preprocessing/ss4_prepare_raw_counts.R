@@ -46,3 +46,4 @@ identical(rownames(t_count_qa81_361), rownames(meta_qa81))
 write.csv(t_count_qa81_361, 't_count_qa81_361.csv')
 write.csv(t_count_qa22_195, 't_count_qa22_195.csv')
 
+
