@@ -12,16 +12,16 @@ from collections import Counter
 #      loading in the data
 ###############################
 data_dir = 'path/to/data'
-meta_qa22 = pd.read_csv(data_dir+'/meta_qa22.csv',index_col=0)
-meta_qa81 = pd.read_csv(data_dir+'/meta_qa81.csv', index_col=0)
+meta_qa22 = pd.read_csv(data_dir+'/QA22_meta_after_qc.csv',index_col=0)
+meta_qa81 = pd.read_csv(data_dir+'/QA81_meta_after_qc.csv', index_col=0)
 
-qa81_data = sc.read_csv(data_dir+'/t_count_qa81_361.csv')
-qa22_data = sc.read_csv(data_dir+'/t_count_qa22_195.csv')
+qa81_data = sc.read_csv(data_dir+'/QA81_raw_counts_after_qc.csv')
+qa22_data = sc.read_csv(data_dir+'/QA22_raw_counts_after_qc.csv')
 
 qa81_data.obs = meta_qa81
 qa22_data.obs = meta_qa22
 
-qa22_data = qa22_data[qa22_data.obs['Details'] != 'LT_48h',:]
+
 qa22_data = qa22_data[qa22_data.obs['Details'] != 'LT_72h_PD',:]
 qa81_data = qa81_data[qa81_data.obs['Details'] != 'LT_24h_PD',:]
 
