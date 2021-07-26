@@ -41,7 +41,7 @@ dds <- DESeq2::DESeqDataSetFromMatrix(count_all_filtered, meta_sub_2col, design 
 dds$timepoint <- factor(dds$timepoint, 
                         levels = c('LT_0h','LT_6h','LT_24h_UNTR','LT_72h_PD','LT_72h_UNTR'))
 
-saveRDS(dds, 'dds_qa22_175cells_no48.rds')
+saveRDS(dds, 'dds_qa22.rds')
 
 dds <- DESeq2::DESeq(dds, parallel=TRUE)
 
