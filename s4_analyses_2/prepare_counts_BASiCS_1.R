@@ -3,30 +3,23 @@ suppressPackageStartupMessages(library(bglab))
 
 meta <- read.csv('meta_blobs_for_total_counts.csv', row.names=1)
 
+counts_22 <- read.csv('QA22_raw_counts_after_qc.csv',row.names=1)
 
-scd_qc <- readRDS('scd_qc.rds')
-scd453 <- readRDS('scd453_scran_bglab.rds')
-
-
-count_qa22 <- scd_qc@counts      ### 65988  576
-count_qa81 <- scd453@counts    ### 65988  570
+counts_81 <- read.csv('QA81_raw_counts_after_qc.csv',row.names=1)
 
 
-identical(rownames(count_qa22),rownames(count_qa81))
 
-counts<- cbind(count_qa22,count_qa81)
+counts_combined <- rbind(counts_22,counts_81)
 
-dim(counts)
+ 
+count_all <- t(counts_combined)
 
-
-count_429 <- counts[,rownames(meta)]
+count_429 <- count_all[,rownames(meta)]
 
 identical(rownames(meta), colnames(count_429))
 
 
-dim(count_429)  ### 65988   429
-
-
+ 
 ######################################
 #  filtering counts, using the filter === More than 20 RPM (on average), across all cells
 ###################################### 
