@@ -2,27 +2,17 @@ suppressPackageStartupMessages(library(bglab))
 suppressPackageStartupMessages(library(DESeq2))
 suppressPackageStartupMessages(library(plyr))
 
-scd_qc <- readRDS('scd_qc.rds')
 
-meta_qc <- pData(scd_qc)
-
-
-meta_qc$Details <- mapvalues(meta_qc$Details, 
-                              from = c('LT-HSCs_T0','LT-HSCs_T24','LT-HSCs_T48','LT-HSCs_T6','LT-HSCs_T72_UN','LT-HSCs_T72_PD'),
-                              to=c('LT_0h','LT_24h_UNTR','LT_48h','LT_6h','LT_72h_UNTR','LT_72h_PD'))
-
-count_qa22 <- scd_qc@counts      ### 65988  576
-dim(count_qa22)
+meta_22 <- read.csv('QA22_meta_after_qc.csv',row.names=1)
+counts_22 <- read.csv('QA22_raw_counts_after_qc.csv',row.names=1)
 
 
-meta_sub <- meta_qc[-which(meta_qc$Details == 'LT_48h'),]
-dim(meta_sub)
+ 
+count_175 <- t(counts_22)
 
-count_175 <- count_qa22[,rownames(meta_sub)]
-dim(count_175)
-
-identical(colnames(count_175), rownames(meta_sub))
-
+identical(colnames(count_175),rownames(meta_22))
+ 
+ 
 
 ######################### 
 # filtering
@@ -35,7 +25,7 @@ table(express_3cells)
 count_all_filtered <- count_175[express_3cells,]
 dim(count_all_filtered)
 
-meta_sub_2col <- meta_sub[,c('Details','Cell_type_subtype')]
+meta_sub_2col <- meta_22[,c('Details','Cell_type_subtype')]
 
 colnames(meta_sub_2col) <- c('timepoint','batch')
 

@@ -2,43 +2,38 @@ suppressPackageStartupMessages(library(bglab))
 suppressPackageStartupMessages(library(DESeq2))
 suppressPackageStartupMessages(library(plyr))
 
-scd453 <- readRDS('scd453_scran_bglab.rds')
 
-meta453 <- pData(scd453)
+meta_81 <- read.csv('QA81_meta_after_qc.csv',row.names=1)
+counts_81 <- read.csv('QA81_raw_counts_after_qc.csv',row.names=1)
 
-meta453 <- subset(meta453 , Details !='LT_72h_PD')
-meta453 <- droplevels(meta453)
-head(meta453)
+ 
+count_all <- t(counts_81)
 
-count_qa81 <- scd453@counts    ### 65988  570
+identical(colnames(count_all),rownames(meta_81))
 
-dim(count_qa81)
-
-count_qa81_no72PD <- count_qa81[,rownames(meta453)]
-
-identical(colnames(count_qa81_no72PD), rownames(meta453))
-
+  
+ 
 ######################### 
 # filtering
 #########################
 
-express_3cells <- rowSums(count_qa81_no72PD!=0)>=3
+express_3cells <- rowSums(count_all!=0)>=3
 table(express_3cells)
 
-count_all_filtered <- count_qa81_no72PD[express_3cells,]
+count_all_filtered <- count_all[express_3cells,]
 dim(count_all_filtered)
 
-meta453_2col <- meta453[,c('Details','Cell_type_subtype')]
+meta_81_2col <- meta_81[,c('Details','Cell_type_subtype')]
 
-colnames(meta453_2col) <- c('timepoint','batch')
+colnames(meta_81_2col) <- c('timepoint','batch')
 
-identical(colnames(count_all_filtered),rownames(meta453_2col))
+identical(colnames(count_all_filtered),rownames(meta_81_2col))
 
-dds <- DESeq2::DESeqDataSetFromMatrix(count_all_filtered, meta453_2col, design = ~ timepoint)
+dds <- DESeq2::DESeqDataSetFromMatrix(count_all_filtered, meta_81_2col, design = ~ timepoint)
 
 dds$timepoint <- factor(dds$timepoint, levels = c('LT_0h','LT_6h', 'LT_24h_PD', 'LT_24h_UNTR','LT_72h_UNTR' ))
 
-saveRDS(dds, 'dds_qa81_no72PD.rds')
+saveRDS(dds, 'dds_qa81.rds')
 
 
 ######################### 
