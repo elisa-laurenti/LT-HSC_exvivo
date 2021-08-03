@@ -1,10 +1,6 @@
 #!/usr/bin/env Rscript
 
-suppressPackageStartupMessages(library(bglab))
-suppressPackageStartupMessages(library(splines))
-suppressPackageStartupMessages(library(DESeq2))
-suppressPackageStartupMessages(library(plyr))
-suppressPackageStartupMessages(library(edgeR))
+
 suppressPackageStartupMessages(library(SIBERG))
 
 ##############################
