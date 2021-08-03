@@ -5,6 +5,7 @@ suppressPackageStartupMessages(library(DESeq2))
 
 result_list <- readRDS('deseq2_results_noPD.rds') ### deseq2 results between all timepoints
 
+geneTable <- readRDS('genetable.rds',row.names=1)
 
 fdr<-0.05
 gene_list <- c()
@@ -18,7 +19,12 @@ unique_genes <- unique(gene_list)
 
 
 
-saveRDS(unique_genes,'DE_unique_genes.rds')
+rownames(geneTable) <- geneTable$Ensembl_Gene_ID
+
+unique_table <- geneTable[unique_genes,]
+
+
+saveRDS(unique_table,'DE_unique_genes.rds')
 
 
 
